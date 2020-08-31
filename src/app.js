@@ -1,13 +1,42 @@
+//props is a one way communication from parent to child and we use functions(hasDeleteOptions,handlePick) to reverse the flow from child to parent
+
 class IndecisionApp extends React.Component {
+    constructor(props) {
+        super(props)
+        this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
+        this.handlePick = this.handlePick.bind(this)
+        this.state = {
+            options: ['One', 'Two', 'Three']
+        }
+    }
+    //handle delete options
+    handleDeleteOptions() {
+        this.setState(() => {
+            return {
+                options: []
+            }
+        })
+    }
+
+    handlePick() {
+        const randomNum = Math.floor(Math.random() * this.state.options.length)
+        const option = this.state.options[randomNum]
+        alert(option)
+    }
     render() {
         const title = 'Indecision'
         const subtitle = 'Put Your Life in the Hands of a Computer'
-        const options = ['One', 'Two', 'Four']
         return (
             <div>
                 <Header title={title} subtitle={subtitle} />
-                <Action />
-                <Options options={options}/>
+                <Action 
+                    hasOptions={this.state.options.length>0}
+                    handlePick={this.handlePick}
+                />
+                <Options 
+                    options={this.state.options}
+                    handleDeleteOptions={this.handleDeleteOptions}
+                />
                 <AddOption />
             </div>
         )
@@ -26,30 +55,26 @@ class Header extends React.Component {
 }
 
 class Action extends React.Component {
-    handlePick() {
-
-    }
     render() {
         return (
             <div>
-                <button onClick={this.handlePick}>What Should I do?</button>
+                <button 
+                onClick={this.props.handlePick}
+                disabled={!this.props.hasOptions}
+                >
+
+                    What Should I do?
+                </button>
             </div>
         )
     }
 }
 
 class Options extends React.Component {
-    constructor(props){
-        super(props)
-        this.handleRemoveAll = this.handleRemoveAll.bind(this)
-    }
-    handleRemoveAll() {
-
-    }
     render() {
         return (
             <div>
-            <button onClick={this.handleRemoveAll}>Remove All</button>
+            <button onClick={this.props.handleDeleteOptions}>Remove All</button>
             {this.props.options.map((option) => <Option key={option} optionText={option}/>)}               
             </div>
         )
