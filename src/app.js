@@ -39,6 +39,10 @@ class Action extends React.Component {
 }
 
 class Options extends React.Component {
+    constructor(props){
+        super(props)
+        this.handleRemoveAll = this.handleRemoveAll.bind(this)
+    }
     handleRemoveAll() {
 
     }
@@ -84,3 +88,17 @@ class AddOption extends React.Component {
 }
 
 ReactDOM.render(<IndecisionApp />,document.getElementById('app'))
+
+//Use of Bind
+
+// const obj = {
+//     name: 'Jess',
+//     getName() {
+//         return this.name
+//     }
+// }
+// const getName = obj.getName;
+// console.log(getName());     //This will throw an error as getName above tries to re-access the same property. So obj.getName is able to fetch the name but getName function won't be able to fetch it
+
+// const getName = obj.getName.bind(obj)
+// console.log(getName());     //THis is correct
