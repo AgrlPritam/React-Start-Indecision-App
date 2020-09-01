@@ -21,6 +21,31 @@ class IndecisionApp extends React.Component {
             options: props.options
         }
     }
+
+    //Lifecycle methods- Exact name is important. Below methods are class based only. Won't work in stateless components. Thats why staeless components are fast
+    componentDidMount() {
+        try {
+            const json = localStorage.getItem('options')
+            const options = JSON.parse(json)
+            if(options) {
+                this.setState(() => ({ options }))
+            }
+        }catch (e) {
+            //Do Nothing
+        }
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if(prevState.options.length !== this.state.options.length) {
+            const json = JSON.stringify(this.state.options)
+            localStorage.setItem('options',json)
+        }
+    }
+
+    componentWillUnmount(){
+        console.log("Component will unmount");
+    }
+    //end of lifecycle methods. Check Mobile bookmarks React Lifecycle
+
     //handle delete options
     handleDeleteOptions() {
         this.setState(() => ({options: []}))
@@ -134,6 +159,7 @@ const Options = (props) => {
     return (
         <div>
         <button onClick={props.handleDeleteOptions}>Remove All</button>
+        {props.options.length === 0 && <p>Please Add an Option to Get Going!!</p>}
         {
             props.options.map((option) => (
                 <Option 
@@ -198,6 +224,10 @@ class AddOption extends React.Component {
         const error = this.props.handleAddOption(option)
 
         this.setState(() => ({error}))
+
+        if(!error) {
+            e.target.elements.option.value = ''
+        }
     }
     render() {
         return (
