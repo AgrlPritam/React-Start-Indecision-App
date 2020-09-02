@@ -1,3 +1,5 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
 //props is a one way communication from parent to child and we use functions(hasDeleteOptions,handlePick) to reverse the flow from child to parent
 //stateless functional component
 // const User = (props) => {
