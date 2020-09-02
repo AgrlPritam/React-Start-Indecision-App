@@ -18,7 +18,7 @@ class IndecisionApp extends React.Component {
         this.handleAddOption = this.handleAddOption.bind(this)
         this.handleDeleteOption = this.handleDeleteOption.bind(this)
         this.state = {
-            options: props.options
+            options: []     //options: props.options if using defaultProps
         }
     }
 
@@ -97,9 +97,9 @@ class IndecisionApp extends React.Component {
     }
 }
 
-IndecisionApp.defaultProps = {
-    options: []
-}
+// IndecisionApp.defaultProps = {
+//     options: []
+// }
 
 //stateless component - Header
 const Header = (props) => {
@@ -242,7 +242,7 @@ class AddOption extends React.Component {
     }
 }
 
-ReactDOM.render(<IndecisionApp options={['Default One','Default Two']} />,document.getElementById('app'))
+ReactDOM.render(<IndecisionApp />,document.getElementById('app'))
 
 //Use of Bind
 

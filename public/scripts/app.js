@@ -33,7 +33,7 @@ var IndecisionApp = function (_React$Component) {
         _this.handleAddOption = _this.handleAddOption.bind(_this);
         _this.handleDeleteOption = _this.handleDeleteOption.bind(_this);
         _this.state = {
-            options: props.options
+            options: [] //options: props.options if using defaultProps
         };
         return _this;
     }
@@ -140,11 +140,14 @@ var IndecisionApp = function (_React$Component) {
     return IndecisionApp;
 }(React.Component);
 
-IndecisionApp.defaultProps = {
-    options: []
+// IndecisionApp.defaultProps = {
+//     options: []
+// }
 
-    //stateless component - Header
-};var Header = function Header(props) {
+//stateless component - Header
+
+
+var Header = function Header(props) {
     return React.createElement(
         'div',
         null,
@@ -327,7 +330,7 @@ var AddOption = function (_React$Component2) {
     return AddOption;
 }(React.Component);
 
-ReactDOM.render(React.createElement(IndecisionApp, { options: ['Default One', 'Default Two'] }), document.getElementById('app'));
+ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('app'));
 
 //Use of Bind
 
