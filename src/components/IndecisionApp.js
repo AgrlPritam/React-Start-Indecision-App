@@ -5,15 +5,48 @@ import {Action} from './Action'
 import {Header} from './Header'
 
 export default class IndecisionApp extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
-        this.handlePick = this.handlePick.bind(this)
-        this.handleAddOption = this.handleAddOption.bind(this)
-        this.handleDeleteOption = this.handleDeleteOption.bind(this)
-        this.state = {
-            options: []     //options: props.options if using defaultProps
+    state = {
+        options:[]
+    }
+    //Below constructor is not required as we are using class-properties of babel webpack and have tweaked the functions after lifecycle method to use arrow functions
+    // constructor(props) {
+    //     super(props)
+    //     this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
+    //     this.handlePick = this.handlePick.bind(this)
+    //     this.handleAddOption = this.handleAddOption.bind(this)
+    //     this.handleDeleteOption = this.handleDeleteOption.bind(this)
+    //     this.state = {
+    //         options: []     //options: props.options if using defaultProps
+    //     }
+    // }
+
+    //handle delete options
+    handleDeleteOptions = () => {
+        this.setState(() => ({options: []}))
+    }
+
+    handleDeleteOption = (optionToRemove) => {
+        this.setState((prevState) => ({
+            options: prevState.options.filter((option) => optionToRemove !== option
+            )
+        }))
+    }
+
+    handlePick = () => {
+        const randomNum = Math.floor(Math.random() * this.state.options.length)
+        const option = this.state.options[randomNum]
+        alert(option)
+    }
+
+    handleAddOption = (option) => {
+        if(!option){
+            return 'Enter Valid Value to Add Item'
+        } else if(this.state.options.indexOf(option)>-1) {
+            return 'This Option Already Exists'
         }
+        this.setState((prevState) => ({
+            options: prevState.options.concat(option)
+        }))
     }
 
     //Lifecycle methods- Exact name is important. Below methods are class based only. Won't work in stateless components. Thats why staeless components are fast
@@ -40,34 +73,6 @@ export default class IndecisionApp extends React.Component {
     }
     //end of lifecycle methods. Check Mobile bookmarks React Lifecycle
 
-    //handle delete options
-    handleDeleteOptions() {
-        this.setState(() => ({options: []}))
-    }
-
-    handleDeleteOption(optionToRemove) {
-        this.setState((prevState) => ({
-            options: prevState.options.filter((option) => optionToRemove !== option
-            )
-        }))
-    }
-
-    handlePick() {
-        const randomNum = Math.floor(Math.random() * this.state.options.length)
-        const option = this.state.options[randomNum]
-        alert(option)
-    }
-
-    handleAddOption(option) {
-        if(!option){
-            return 'Enter Valid Value to Add Item'
-        } else if(this.state.options.indexOf(option)>-1) {
-            return 'This Option Already Exists'
-        }
-        this.setState((prevState) => ({
-            options: prevState.options.concat(option)
-        }))
-    }
     render() {
         //const title = 'Indecision'
         const subtitle = 'Put Your Life in the Hands of a Computer'
