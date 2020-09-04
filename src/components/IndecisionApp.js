@@ -3,10 +3,12 @@ import AddOption from './AddOption'
 import {Options} from './Options'
 import {Action} from './Action'
 import {Header} from './Header'
+import OptionModal from './OptionModal'
 
 export default class IndecisionApp extends React.Component {
     state = {
-        options:[]
+        options:[],
+        selectedOption: undefined
     }
     //Below constructor is not required as we are using class-properties of babel webpack and have tweaked the functions after lifecycle method to use arrow functions
     // constructor(props) {
@@ -35,7 +37,7 @@ export default class IndecisionApp extends React.Component {
     handlePick = () => {
         const randomNum = Math.floor(Math.random() * this.state.options.length)
         const option = this.state.options[randomNum]
-        alert(option)
+        this.setState(() => ({selectedOption: option}))
     }
 
     handleAddOption = (option) => {
@@ -47,6 +49,10 @@ export default class IndecisionApp extends React.Component {
         this.setState((prevState) => ({
             options: prevState.options.concat(option)
         }))
+    }
+
+    handleClearSelectedOption = () => {
+        this.setState(() => ({selectedOption: undefined}))
     }
 
     //Lifecycle methods- Exact name is important. Below methods are class based only. Won't work in stateless components. Thats why staeless components are fast
@@ -90,6 +96,10 @@ export default class IndecisionApp extends React.Component {
                 />
                 <AddOption 
                     handleAddOption = {this.handleAddOption}
+                />
+                <OptionModal 
+                    selectedOption={this.state.selectedOption}
+                    handleClearSelectedOption={this.handleClearSelectedOption}
                 />
             </div>
         )
