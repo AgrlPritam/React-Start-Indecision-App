@@ -4,8 +4,8 @@
     border-bottom: .6rem solid darken($color: $purple, $amount: 10%);
     color: white;
     font-weight: bold;
+    margin-bottom: $m-size;
     font-size: $l-size;
-    margin-bottom: $xl-size;
     padding: 2.4rem;
     width: 100%;
 }
@@ -27,4 +27,10 @@
     border: none;
     color: $off-white;
     padding: 0;
+}
+
+@media (min-width: $desktop-breakpoint) {
+    .big-button {
+        margin-bottom: $xl-size;
+    }
 }
